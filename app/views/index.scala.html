@@ -1,65 +1,222 @@
-@(message: String)
+@import navigation._
 
-@main("GettingStarted") {
+@(message: NavPath)(implicit flash: Flash)
 
-<div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="@routes.Assets.at("images/lang-logo.png")">
-    </a>
-    <h1>Getting Started with Scala/Play on Heroku</h1>
-    <p>This is a sample Play application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-scala"><span class="glyphicon glyphicon-flash"></span> Getting Started with Scala/Play</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/scala-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
-</div>
-<div class="container">
-  @if(message != null){
-  <div class="alert alert-success text-center" role="alert">
-    @message
-  </div>
-  }
-  <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-scala" class="alert-link">Getting Started with Scala/Play on Heroku</a> tutorial.
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/scala-getting-started">Heroku Button</a> on the repository.</li>
+@factor = @{1.2}
+@width = @{factor * 800}
+@height = @{factor * 250}
 
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/scala-getting-started/blob/master/build.sbt">build.sbt</a>, creating a deployable slug.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-scala">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
-        <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
-        <ul>
-          <li><code>git clone https://github.com/heroku/scala-getting-started.git</code> - this will create a local copy of the source code for the app</li>
-          <li><code>cd scala-getting-started</code> - change directory into the local source code repository</li>
-          <li><code>heroku git:remote -a &lt;your-app-name></code> - associate the Heroku app with the repository</li>
-          <li>You'll now be set up to run the app locally, or <a href="https://devcenter.heroku.com/articles/getting-started-with-scala#push-local-changes">deploy changes</a> to Heroku</li>
-        </ul>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-scala">Getting Started with Scala/Play on Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/deploying-scala">Deploying Scala Apps on Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/play-support">Heroku Play Framework Support</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/scala-support">Heroku Scala Support</a></li>
-      </ul>
-    </div>
-  </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=ZCOOL+XiaoWei" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+<style>
 
+.blackandwhite {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
+
+.center img {        
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  max-width: @{width}px;
+}
+
+.stuff {
+  font-size: 17px;
+  @* font-family: 'ZCOOL XiaoWei', serif; *@
+}
+
+body {
+  color: #E0E0E0;
+  font-size: 20px;
+  @* font-family: 'ZCOOL XiaoWei', serif; *@
+  font-family: 'Quicksand', sans-serif;
+  background-image: url("/assets/images/classy_fabric.png");
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+h2 {
+  background-color: #AAFFAA;
+  text-align: center;
+  margin: 0;
+  padding: 20px
+}
+
+table { 
+  margin-left: 20px
+  @* margin: 0 auto; 
+  width:550px; *@
+}
+
+input {
+  width: 200px;
+}
+
+textarea {
+  width: 200px; 
+  height: 70px;
+}
+
+td {
+  padding:0 5px 0 5px;
+  text-align: right;
+}
+
+input, textarea {
+  background-color : #d1d1d1;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+</style>
+</head>
+<body>
+<div class="content">
+  <div> 
+    <img class="blackandwhite" src="/assets/images/header_cropped.png" height=@height width=@width>
+  </div>
+  @nav(message)
+ 
+  
+
+
+  <div class="stuff">
+
+   @if(message == Home()) {
+     <p> We are a powerful one-man conglomerate located in the center of Silicon Valley; the makers of <i>SolitareAwesome</i> and other amazing mobile applications. We draw inspiration from nature and pay a great deal of attention to detail. We specialize in software development in the Apple ecosystem (mobile and desktop), graphic design, and user experience and look forward to hearing from you.
+     </p> 
+    } 
+
+    @if(message == News()) {
+      <div class="center"> 
+        <img src="/assets/images/Icon.png" height="142" width="142">
+      </div>
+      @for(i <- 1 to 100) {
+        <i> @{i*i} </i> <br/>
+      }
+    }
+  
+    @if(message == Privacy()) {
+      <p>
+      Our products do not capture user data and consequently do not expose the data to third parties. </p>
+    } 
+
+    @if(message == Contact()) {
+      @if(!flash.get("success").isEmpty) {
+        <p>
+          @flash.get("success")
+        </p>
+      } else {
+        <p>
+          Looking forward to your feedback! Please perform a short arithmetic exercise to 
+          let us know aren't a robot.
+        </p>
+      }
+    
+
+
+    <form method="POST" id="my_form" action="/foo">
+    <table>
+          <tr>
+            <td>
+              I am human (2+3=):
+            </td>
+            <td>
+              <input type="" name="human" form="my_form" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              First name:
+            </td>
+            <td>
+              <input type="" name="fname" form="my_form" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Last name:
+            </td>
+            <td>
+              <input type="" name="lname" form="my_form"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Email:
+            </td>
+            <td>
+              <input type="" name="email" form="my_form" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Message:
+            </td>
+            <td>
+              <textarea name="message" form="my_form"></textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <td/> 
+            <td>
+              <input style="background: green; width:70px; height: 40px; color:white; " type="submit" value="Send"> 
+
+            </td>
+          </tr>
+          
+          
+          
+    </table>
+    </form>
+
+    }
+
+
+
+  </div>
+</div>
+
+</body>
+</html>
+
+
